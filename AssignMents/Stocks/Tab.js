@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {View, useWindowDimensions, FlatList, Text, TouchableOpacity} from 'react-native';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {View,StyleSheet, useWindowDimensions, FlatList, Text, TouchableOpacity} from 'react-native';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import StockCards from './StockValueCard';
 import SearchBar from './SearchComp';
 import {useState} from 'react';
@@ -114,23 +114,27 @@ const DATA = [
 ];
 
 const stockData = DATA.map((item, index) => ({index, ...item}));
-const renderItem = ({item}) => <TouchableOpacity>
-  
-</TouchableOpacity>;
+const renderItem = ({item}) => <StockCards stock={item}/>
 
 const FirstRoute = () => {
-  // const [filteredData, setFilteredData] = useState(DATA);
+  const [mainData, setData] = useState(stockData);
+  console.log('Rendering: Tab Bar 1.');
+  const handleSearch = (text) => {
+    const dataCopy = stockData.filter(
+      (item) => item.cryptoshortname.toLowerCase().includes(text.toLowerCase())
+    )
+    setData(dataCopy)
+    };
   return (
     <View style={{flex: 1}}>
-      <View style={{height: 60, backgroundColor: 'orange'}}>
+      <View style={{height: 60, backgroundColor: '#eef0f2'}}>
+        <SearchBar onSearch = { (text) => handleSearch(text)}/>
       </View>
-      <View style={{flex: 1}}>
         <FlatList
-          data={stockData}
+          data={mainData}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.index}
         />
-      </View>
     </View>
   );
 };
@@ -142,6 +146,15 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
+const renderTabBar = (props) => (
+  <TabBar
+    {...props}
+    indicatorStyle={styles.indicator}
+    style={styles.tabBar}
+    labelStyle={styles.label}
+  />
+);
+
 export default function TabComponent() {
   const layout = useWindowDimensions();
 
@@ -152,11 +165,41 @@ export default function TabComponent() {
   ]);
 
   return (
-    <TabView
+    <TabView style = {styles.tabView}
       navigationState={{index, routes}}
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{width: layout.width, height: 20}}
+      renderTabBar={renderTabBar}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  tabView: {
+    margin: 20,
+    marginTop: 20,
+    marginBottom: 0,
+    padding: 0,
+    backgroundColor: 'white',
+    overflow: 'hidden',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    // borderBottomLeftRadius: 20,
+    // borderBottomRightRadius: 20,
+    borderRadius: 20,
+  },
+  tabBar: {
+    backgroundColor: 'white',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderWidth: 0,
+    overflow: 'hidden', // Change the background color as needed
+  },
+  indicator: {
+    backgroundColor: 'lightgrey', // Change the indicator color as needed
+  },
+  label: {
+    color: 'black', // Change the text color as needed
+  },
+});

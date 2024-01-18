@@ -1,8 +1,17 @@
-import React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import React, { useContext } from 'react';
+import {Text, View, StyleSheet, Image, Touchable, TouchableOpacity} from 'react-native';
+import StockDataContext from './Context';
 
 export default StockCards = ({stock}) => {
+
+  const [_, setPrice] = useContext(StockDataContext);
+  console.log('Rendering: Stocks Card');
+  const handleClick = (data) => {
+     setPrice(data.price)
+  };
+
   return (
+    <TouchableOpacity onPress = {() => handleClick(stock)}>
     <View style={styles.container}>
       <View style={styles.stockContainer}>
         <Image
@@ -16,6 +25,7 @@ export default StockCards = ({stock}) => {
       <Text style={styles.change}>{stock.netgrowth}%</Text>
       <Text style={styles.capital}>${stock.capital}</Text>
     </View>
+    </TouchableOpacity>
   );
 };
 
@@ -26,13 +36,13 @@ const DisplayUpToThreeChars = ({text}) => {
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    marginVertical: 1,
-    paddingVertical: 4,
+
+    marginHorizontal: 10,
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: 'lightgrey',
-    marginHorizontal: 10,
     justifyContent: 'space-between',
+    //backgroundColor: 'green',
   },
   stockContainer: {
     flex: 3,
@@ -57,6 +67,6 @@ const styles = StyleSheet.create({
     // backgroundColor: 'blue',
     alignSelf: 'center',
     textAlign: 'left',
-    flex: 4,
+    flex: 5,
   },
 });

@@ -1,22 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-const SearchBar = ({ onSearch }) => {
-  const [searchText, setSearchText] = useState('');
+const SearchBar = ({onSearch}) => {
+  const [isFocused, setIsFocused] = useState(false);
+  console.log('Rendering: Search Bar');
 
-  useEffect(() => {
-    // Call the parent's onSearch callback with the current searchText
-    onSearch(searchText);
-  }, [searchText, onSearch]);
+  let execNumber = 0;
+  let counter = 0;
+  
+  const handleSearch = (text) => {
+    console.log(text)
+    execNumber += 1;
+    delayedCallback(() => {
+      if (execNumber == counter) {
+        console.log('debounced')
+        onSearch(text);
+      }
+    });
+  }
+
+  function delayedCallback(callback) {
+    setTimeout(() => {
+      counter += 1;
+      callback();
+    }, 500);
+  }
+  
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, padding: isFocused? 14 : 4}}>
        
          <TextInput
           style={styles.input}
-          placeholder="Search..."
-          value={searchText}
-          onChangeText={setSearchText}
+          placeholder="Search Here"
+          // value={searchText}
+          onChangeText={(text) => handleSearch(text)}
+          onFocus={(
+          ) => {setIsFocused(true)}}
+          onBlur={() => {setIsFocused(false)}}
          />
 
     </View>
@@ -26,18 +47,17 @@ const SearchBar = ({ onSearch }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
-    height: 30,
-    // backgroundColor: 'white',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    margin: 16,
+    // alignItems: 'center',
+    flex: 1,
+    padding: 12,
   },
   input: {
     flex: 1,
-    fontSize: 16,
-    marginRight: 8,
+    fontSize: 14,
+    marginRight: 0,
+    backgroundColor: 'white',
+    borderRadius: 6,
+    paddingHorizontal: 10,
   },
 });
 

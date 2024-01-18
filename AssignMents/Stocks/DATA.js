@@ -2,7 +2,7 @@ const DATA = [
   {
     img: 'stock1.jpg',
     cryptoshortname: 'BTC',
-    price: 4500,
+    price: 450,
     capital: 123456789,
     netgrowth: 5,
   },

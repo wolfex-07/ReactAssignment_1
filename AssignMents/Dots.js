@@ -1,8 +1,7 @@
 import { Text, View, StyleSheet, Image } from 'react-native';
 
 export default function Dots(posn) {
-  console.log("posn",posn)
-  console.log("bp",posn.posn.bloodPressure)
+  console.log('Rendering: BAr graph');
   return (
     <View style = {{flexDirection: 'column'}}>
     <View style={styles(posn.posn.bloodPressure).item}>

@@ -30,7 +30,7 @@ const StockHeaderView = ({navigation}) => {
             }}>
             <TouchableOpacity
               style={styles.circularButton}
-              onPress={() => alert('This is a button!')}>
+            >
               <Image
                 style={styles.dropdownImg}
                 
@@ -40,15 +40,14 @@ const StockHeaderView = ({navigation}) => {
           <View style={styles.rightHeaderButtonsBgView}>
             <TouchableOpacity
               style={styles.circularbuttonWithLightBg}
-              onPress={() => alert('This is a button!')}>
+              >
               <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.rightHeadersButton}
-              onPress={() => alert('This is a button!')}>
+             >
               <Image
                 style={styles.dropdownImg}
-               
               />
             </TouchableOpacity>
             <Image

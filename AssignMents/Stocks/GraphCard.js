@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import DrawDots from '../DotGraph/DrawDots';
+import StockDataContext from './Context';
 
 function fetchData() {
-  
+
     const usersData = [];
     const yAxisData = [];
-    const range = 10;
+    const range = 30;
  
     for (let i = 0; i < range; i++) {
       const x = i - range / 2;
       const time = (i%13) + ' am'
       const food = (i%7==0)
-      const title = Math.round( 100 * Math.sin((Math.PI * x) / (range / 2)) + 100); // Parabolic function
+      const title = Math.round( 10 * Math.sin((Math.PI * x) / (range / 2)) + 20); // Parabolic function
       usersData.push({ id: i, title: title, time, food });
     }
  
@@ -25,6 +26,8 @@ function fetchData() {
 
 
 export default GraphCard = () => {
+  const [price2, setPrice2] = useContext(StockDataContext);
+  const [price3, setPrice3] = useContext(StockDataContext);
   return (
     <View style={(style = styles.container)}>
       <View style={styles.graphHeader}>
@@ -33,7 +36,7 @@ export default GraphCard = () => {
           <Text>USD</Text>
         </View>
         <View style={styles.TextBoxDown}>
-        <Text style = {styles.text}>$124,450</Text>
+        <Text style = {styles.text}>${price2}</Text>
         </View>
       </View>
       <View style={styles.graphview}>
@@ -51,9 +54,10 @@ export default GraphCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'white',
+    backgroundColor: 'white',
     margin: 20,
-    padding: 10,
+    marginBottom: 0,
+    padding: 30,
     borderRadius: 20,
     flex: 1,
   },
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
   },
   graphview: {
-    //backgroundColor: 'lightblue',
+    // backgroundColor: 'lightblue',
     padding: 10,
     height: 160,
    // height: 20,
