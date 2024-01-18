@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {Text, View, StyleSheet, Image, Touchable, TouchableOpacity} from 'react-native';
-import StockDataContext from './Context';
+import { memo } from 'react';
 
-export default StockCards = ({stock}) => {
 
-  const [_, setPrice] = useContext(StockDataContext);
+export default StockCards = ({stock,toSetPrice}) => {
+
   console.log('Rendering: Stocks Card');
+
   const handleClick = (data) => {
-     setPrice(data.price)
+     toSetPrice(data.price)
   };
 
   return (
@@ -70,3 +71,5 @@ const styles = StyleSheet.create({
     flex: 5,
   },
 });
+
+memo(StockCards);

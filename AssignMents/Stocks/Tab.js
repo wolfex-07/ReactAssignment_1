@@ -1,12 +1,22 @@
 import * as React from 'react';
-import {View,StyleSheet, useWindowDimensions, FlatList, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  FlatList,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import StockCards from './StockValueCard';
 import SearchBar from './SearchComp';
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
+import {memo} from 'react';
+import StockDataContext from './Context';
+import {useContext} from 'react';
 
 const DATA = [
- {
+  {
     img: 'stock1.jpg',
     cryptoshortname: 'BTC',
     price: 4500,
@@ -114,30 +124,46 @@ const DATA = [
 ];
 
 const stockData = DATA.map((item, index) => ({index, ...item}));
-const renderItem = ({item}) => <StockCards stock={item}/>
 
 const FirstRoute = () => {
+  const [_, setPrice] = useContext(StockDataContext);
   const [mainData, setData] = useState(stockData);
+
+  const renderItem = ({item}) => (
+    <StockCards stock={item} toSetPrice={value => handlePriceSet(value)} />
+  );
+
   console.log('Rendering: Tab Bar 1.');
-  const handleSearch = (text) => {
-    const dataCopy = stockData.filter(
-      (item) => item.cryptoshortname.toLowerCase().includes(text.toLowerCase())
-    )
-    setData(dataCopy)
-    };
+  const handleSearch = text => {
+    const dataCopy = stockData.filter(item =>
+      item.cryptoshortname.toLowerCase().includes(text.toLowerCase()),
+    );
+    setData(dataCopy);
+  };
+
+  const handlePriceSet = value => {
+    console.log('value at parent', value);
+    setPrice(value);
+  };
+
   return (
     <View style={{flex: 1}}>
       <View style={{height: 60, backgroundColor: '#eef0f2'}}>
-        <SearchBar onSearch = { (text) => handleSearch(text)}/>
+        <SearchBar onSearch={text => handleSearch(text)} />
       </View>
-        <FlatList
-          data={mainData}
-          renderItem={renderItem}
-          keyExtractor={item => item.index}
-        />
+      {
+        // console.log('rerenders view')
+      }
+      <FlatList
+        data={mainData}
+        renderItem={renderItem}
+        keyExtractor={item => item.index}
+      />
     </View>
   );
 };
+
+memo(FirstRoute);
 
 const SecondRoute = () => <View style={{flex: 1}} />;
 
@@ -146,7 +172,7 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
-const renderTabBar = (props) => (
+const renderTabBar = props => (
   <TabBar
     {...props}
     indicatorStyle={styles.indicator}
@@ -157,15 +183,17 @@ const renderTabBar = (props) => (
 
 export default function TabComponent() {
   const layout = useWindowDimensions();
-
+  console.log('tabcomponent renders');
   const [index, setIndex] = React.useState(0);
+
   const [routes] = React.useState([
     {key: 'first', title: 'Market'},
     {key: 'second', title: 'Recent'},
   ]);
 
   return (
-    <TabView style = {styles.tabView}
+    <TabView
+      style={styles.tabView}
       navigationState={{index, routes}}
       renderScene={renderScene}
       onIndexChange={setIndex}
@@ -203,3 +231,5 @@ const styles = StyleSheet.create({
     color: 'black', // Change the text color as needed
   },
 });
+
+memo(TabComponent);

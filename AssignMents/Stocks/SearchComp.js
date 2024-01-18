@@ -4,7 +4,6 @@ import { View, TextInput, StyleSheet } from 'react-native';
 const SearchBar = ({onSearch}) => {
   const [isFocused, setIsFocused] = useState(false);
   console.log('Rendering: Search Bar');
-
   let execNumber = 0;
   let counter = 0;
   

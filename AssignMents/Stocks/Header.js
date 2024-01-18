@@ -11,8 +11,10 @@ import {
 import {Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { memo } from 'react';
 
 const StockHeaderView = ({navigation}) => {
+  console.log('header: Rerenders')
   return (
     <SafeAreaView style={{backgroundColor: 'white'}}>
       <View style={styles.headerViewBg}>
@@ -61,7 +63,7 @@ const StockHeaderView = ({navigation}) => {
   );
 };
 
-export default StockHeaderView;
+export default memo(StockHeaderView);
 
 const styles = StyleSheet.create({
   headerViewBg: {

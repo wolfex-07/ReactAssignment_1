@@ -3,7 +3,6 @@ import { Text,View,StyleSheet } from "react-native";
 
 const height = 120;
 export default function DrawDots({data})  {
-    console.log("data is", data)
     return (
     <View style = {DrawDotsStyle().componentContainer}>
        <View style={
