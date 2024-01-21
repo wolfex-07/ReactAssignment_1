@@ -10,8 +10,9 @@ import DotsGraph from './AssignMents/DotGraph/DotsGraph';
 import Home from './AssignMents/Navigations/Home';
 import StockApp from './AssignMents/Stocks/Stocks';
 import TabComponent from './AssignMents/Stocks/Tab';
+import SnakeGame from './SnakeGame/SnakeGame';
 
-entry(StockApp);
+entry(SnakeGame);
 function entry(className) {
     AppRegistry.registerComponent(appName, () => className);
 }

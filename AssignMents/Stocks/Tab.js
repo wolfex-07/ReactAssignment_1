@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -126,7 +127,7 @@ const DATA = [
 const stockData = DATA.map((item, index) => ({index, ...item}));
 
 const FirstRoute = () => {
-  const [_, setPrice] = useContext(StockDataContext);
+  const [price, setPrice] = useContext(StockDataContext);
   const [mainData, setData] = useState(stockData);
 
   const renderItem = ({item}) => (
@@ -142,7 +143,6 @@ const FirstRoute = () => {
   };
 
   const handlePriceSet = value => {
-    console.log('value at parent', value);
     setPrice(value);
   };
 
@@ -152,7 +152,7 @@ const FirstRoute = () => {
         <SearchBar onSearch={text => handleSearch(text)} />
       </View>
       {
-        // console.log('rerenders view')
+        console.log('rerenders view')
       }
       <FlatList
         data={mainData}
@@ -166,6 +166,7 @@ const FirstRoute = () => {
 memo(FirstRoute);
 
 const SecondRoute = () => <View style={{flex: 1}} />;
+memo(SecondRoute);
 
 const renderScene = SceneMap({
   first: FirstRoute,

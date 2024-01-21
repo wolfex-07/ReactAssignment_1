@@ -3,32 +3,36 @@ import {Text, View, StyleSheet, Image, Touchable, TouchableOpacity} from 'react-
 import { memo } from 'react';
 
 
-export default StockCards = ({stock,toSetPrice}) => {
-
-  console.log('Rendering: Stocks Card');
+const StockCards = React.memo(({ stock, toSetPrice }) => {
+  console.log('Rendering: Stocks Card', stock.price);
 
   const handleClick = (data) => {
-     toSetPrice(data.price)
+    toSetPrice(data.price);
   };
 
   return (
-    <TouchableOpacity onPress = {() => handleClick(stock)}>
-    <View style={styles.container}>
-      <View style={styles.stockContainer}>
-        <Image
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTUCiW7IU9ZYK8KRi_1JyMX-iW7wjtxjE3NW8Zmxq-xQ&s"
-          style={{height: 20, width: 20, marginRight: 6}}
-        />
-        <DisplayUpToThreeChars
-          text={stock.cryptoshortname}></DisplayUpToThreeChars>
+    <TouchableOpacity onPress={() => handleClick(stock)}>
+      <View style={styles.container}>
+        <View style={styles.stockContainer}>
+          <Image
+            source={{
+              uri:
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTUCiW7IU9ZYK8KRi_1JyMX-iW7wjtxjE3NW8Zmxq-xQ&s',
+            }}
+            style={{ height: 20, width: 20, marginRight: 6 }}
+          />
+          <DisplayUpToThreeChars text={stock.cryptoshortname} />
+        </View>
+        <Text style={styles.price}>${stock.price}</Text>
+        <Text style={styles.change}>{stock.netgrowth}%</Text>
+        <Text style={styles.capital}>${stock.capital}</Text>
       </View>
-      <Text style={styles.price}>${stock.price}</Text>
-      <Text style={styles.change}>{stock.netgrowth}%</Text>
-      <Text style={styles.capital}>${stock.capital}</Text>
-    </View>
     </TouchableOpacity>
   );
-};
+});
+
+export default StockCards;
+
 
 const DisplayUpToThreeChars = ({text}) => {
   return <Text>{text.slice(0, 3)}</Text>;

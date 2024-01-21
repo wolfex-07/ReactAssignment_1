@@ -105,3 +105,5 @@ const DATA = [
     netgrowth: 8,
   },
 ];
+
+var price = 0;

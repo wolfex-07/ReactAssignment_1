@@ -28,7 +28,6 @@ function fetchData() {
 export default GraphCard = () => {
   console.log('graphCard: Rerenders');
   const [price2, setPrice2] = useContext(StockDataContext);
-  const [price3, setPrice3] = useContext(StockDataContext);
   return (
     <View style={(style = styles.container)}>
       <View style={styles.graphHeader}>
