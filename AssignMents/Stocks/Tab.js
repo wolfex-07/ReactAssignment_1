@@ -131,7 +131,7 @@ const FirstRoute = () => {
   const [mainData, setData] = useState(stockData);
 
   const renderItem = ({item}) => (
-    <StockCards stock={item} toSetPrice={value => handlePriceSet(value)} />
+    <StockCards stock={item} toSetPrice={handlePriceSet} />
   );
 
   console.log('Rendering: Tab Bar 1.');
@@ -142,9 +142,9 @@ const FirstRoute = () => {
     setData(dataCopy);
   };
 
-  const handlePriceSet = value => {
+  const handlePriceSet = useCallback((value) => {
     setPrice(value);
-  };
+  }, []);
 
   return (
     <View style={{flex: 1}}>

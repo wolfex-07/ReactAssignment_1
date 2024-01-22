@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image, Touchable, TouchableOpacity} from 'react-
 import { memo } from 'react';
 
 
-const StockCards = React.memo(({ stock, toSetPrice }) => {
+const StockCards = ({ stock, toSetPrice }) => {
   console.log('Rendering: Stocks Card', stock.price);
 
   const handleClick = (data) => {
@@ -29,9 +29,9 @@ const StockCards = React.memo(({ stock, toSetPrice }) => {
       </View>
     </TouchableOpacity>
   );
-});
+};
 
-export default StockCards;
+export default memo(StockCards);
 
 
 const DisplayUpToThreeChars = ({text}) => {
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-memo(StockCards);
+// memo(StockCards);

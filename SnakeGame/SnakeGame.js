@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Switch,
 } from 'react-native';
 import {gameStyle} from './SnakeStyles';
 
@@ -20,10 +21,56 @@ const snakeCoordsArray = [
   {x: 60, y: 0},
 ];
 
+let snakeDirection = {
+  left: false,
+  right: true,
+  up: false,
+  down: false,
+};
+
 export default function SnakeGame() {
-  const [moveX, setMoveX] = useState(0);
-  const [moveY, setMoveY] = useState(0);
   const [snakePositonData, setPosition] = useState(snakeCoordsArray);
+  let isGameOver = false;
+
+  function setSnakeDirection(direction) {
+
+    Object.keys(snakeDirection).forEach(key => {
+      snakeDirection[key] = false;
+    });
+    snakeDirection[direction] = true;
+  }
+
+  function start() {
+
+  }
+
+  useEffect(() => {
+    const head = snakePositonData[3]
+    console.log('head is at', head)
+    if(head.x >= 340 || head.x <= 0 || head.y >= 340 || head.y <= 0) {
+        console.log('gameOver')
+        isGameOver = true
+    }
+  }, [snakePositonData]);
+
+  // function flow() {
+  //   switch (true) {
+  //     case snakeDirection.left:
+  //       moveSnake(-20,0)
+  //       break;
+  //     case snakeDirection.right:
+  //       moveSnake(20,0)
+  //       break;
+  //     case snakeDirection.up:
+  //       moveSnake(0,20)
+  //       break;
+  //     case snakeDirection.down:
+  //       moveSnake(0,-20)
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   function moveSnake(moveX, moveY) {
     const updatedSnakeCoords = [...snakePositonData];
@@ -40,67 +87,33 @@ export default function SnakeGame() {
   }
 
   const handleUpBtnTapped = () => {
-    const updatedSnakeCoords = [...snakePositonData];
-
-    for (let i = 0; i < updatedSnakeCoords.length - 1; i++) {
-      updatedSnakeCoords[i] = {...updatedSnakeCoords[i + 1]};
-    }
-
-    const lastElementIndex = updatedSnakeCoords.length - 1;
-    updatedSnakeCoords[lastElementIndex] = {
-      ...updatedSnakeCoords[lastElementIndex],
-      y: updatedSnakeCoords[lastElementIndex].y - 20,
-    };
-
-    setPosition(updatedSnakeCoords);
+    setSnakeDirection('up')
+    const moveY = -20;
+    moveSnake(0, moveY);
   };
 
   const handleDownBtnTapped = () => {
-    const updatedSnakeCoords = [...snakePositonData];
-
-    for (let i = 0; i < updatedSnakeCoords.length - 1; i++) {
-      updatedSnakeCoords[i] = {...updatedSnakeCoords[i + 1]};
-    }
-
-    const lastElementIndex = updatedSnakeCoords.length - 1;
-    updatedSnakeCoords[lastElementIndex] = {
-      ...updatedSnakeCoords[lastElementIndex],
-      y: updatedSnakeCoords[lastElementIndex].y + 20,
-    };
-
-    setPosition(updatedSnakeCoords);
+    setSnakeDirection('down');
+    const moveY = 20;
+    moveSnake(0, moveY);
   };
 
   const handleRightBtnTapped = () => {
-    const updatedSnakeCoords = [...snakePositonData];
-    for (let i = 0; i < updatedSnakeCoords.length - 1; i++) {
-      updatedSnakeCoords[i] = {...updatedSnakeCoords[i + 1]};
-    }
-    const lastElementIndex = updatedSnakeCoords.length - 1;
-    updatedSnakeCoords[lastElementIndex] = {
-      ...updatedSnakeCoords[lastElementIndex],
-      x: updatedSnakeCoords[lastElementIndex].x + 20,
-    };
-    setPosition(updatedSnakeCoords);
+    setSnakeDirection('right');
+    const moveX = 20;
+    moveSnake(moveX, 0);
   };
 
   const handleleftBtnTapped = () => {
-    const updatedSnakeCoords = [...snakePositonData];
-    for (let i = 0; i < updatedSnakeCoords.length - 1; i++) {
-      updatedSnakeCoords[i] = {...updatedSnakeCoords[i + 1]};
-    }
-    const lastElementIndex = updatedSnakeCoords.length - 1;
-    updatedSnakeCoords[lastElementIndex] = {
-      ...updatedSnakeCoords[lastElementIndex],
-      x: updatedSnakeCoords[lastElementIndex].x - 20,
-    };
-    setPosition(updatedSnakeCoords);
+    setSnakeDirection('left');
+    const moveX = -20;
+    moveSnake(moveX, 0);
   };
+
   const handlePausePlayTapped = () => {
     console.log('pause/play tapped');
   };
 
-  console.log(snakePositonData[0].x);
   return (
     <SafeAreaView style={gameStyle.container}>
       <Text style={gameStyle.topText}>SnakeGame 2.0</Text>
@@ -117,9 +130,7 @@ export default function SnakeGame() {
               textAlign: 'center',
               fontSize: 8,
               fontWeight: '700',
-            }}>
-            Tail
-          </Text>
+            }}></Text>
         </View>
         <View
           style={[
@@ -135,24 +146,29 @@ export default function SnakeGame() {
               .moveSnake,
           ]}
         />
-        <View // snake head
+        <View
           style={[
             gameStyle.snakebody,
             changesStyle(snakePositonData[3].x, snakePositonData[3].y)
               .moveSnake,
+            gameStyle.snakeHead,
           ]}>
-          <Text // snake Head
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 6,
-              fontWeight: '700',
-            }}>
-            Head
-          </Text>
+          <Image
+            style={{...gameStyle.snakeHeadImg, 
+              transform: snakeDirection.right ? 'scaleX(-1)' : 
+                snakeDirection.left ? 'scaleX(1)' :  
+                snakeDirection.down ? 'rotate(-90deg)' :
+                'rotate(90deg)'
+            }}
+            // {...styles.container, padding: isFocused? 14 : 4}
+            source={require('./snake-head.png')}
+          />
         </View>
       </View>
-      <TouchableOpacity style={gameStyle.upBtn} onPress={handleUpBtnTapped}>
+      <TouchableOpacity
+        style={gameStyle.upBtn}
+        onPress={handleUpBtnTapped}
+        disabled={false}>
         <Image
           resizeMode="contain"
           style={gameStyle.btnImg}
@@ -161,6 +177,7 @@ export default function SnakeGame() {
       </TouchableOpacity>
       <View style={gameStyle.centerBtnViews}>
         <TouchableOpacity
+          disabled={false}
           style={gameStyle.leftBtn}
           onPress={handleleftBtnTapped}>
           <Image
@@ -179,6 +196,7 @@ export default function SnakeGame() {
           />
         </TouchableOpacity>
         <TouchableOpacity
+          disabled={false}
           onPress={handleRightBtnTapped}
           style={gameStyle.rightBtn}>
           <Image
@@ -188,7 +206,10 @@ export default function SnakeGame() {
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={handleDownBtnTapped} style={gameStyle.downBtn}>
+      <TouchableOpacity
+        disabled={false}
+        onPress={handleDownBtnTapped}
+        style={gameStyle.downBtn}>
         <Image
           resizeMode="contain"
           style={gameStyle.btnImg}
