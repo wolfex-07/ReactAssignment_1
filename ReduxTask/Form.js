@@ -11,8 +11,6 @@ const FormScreen = ({ navigation, route }) => {
   const [dob, setDob] = useState(item.dob);
   const dispatch = useDispatch()
   
-  // const count = useSelector(state => state.form.value)
-  
   const saveData = () => {
     const newData = { id: isEditOn ? item.id : Date.now(), email, phone, dob };
     if (isEditOn) {
@@ -22,7 +20,6 @@ const FormScreen = ({ navigation, route }) => {
       dispatch(increment())
     }
     navigation.navigate('Home', { newData });
-    
   };
 
   return (

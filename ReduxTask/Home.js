@@ -83,11 +83,6 @@ const HomeScreen = ({navigation}) => {
           )}
         />
       )}
-      {/* onClick={() => dispatch(increment())} */}
-      {/* navigation.navigate('Form') */}
-      {/* <TouchableOpacity >
-        <Text>Add data</Text>
-      </TouchableOpacity> */}
       <Button
         title="Add Data"
         onPress={() =>
