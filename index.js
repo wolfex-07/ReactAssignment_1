@@ -11,8 +11,20 @@ import Home from './AssignMents/Navigations/Home';
 import StockApp from './AssignMents/Stocks/Stocks';
 import TabComponent from './AssignMents/Stocks/Tab';
 import SnakeGame from './SnakeGame/SnakeGame';
+import HomeScreen from './ReduxTask/Home';
+import Dots from './AssignMents/Dots';
+import Store from './ReduxTask/Store';
+import { Provider } from 'react-redux';
 
-entry(SnakeGame);
+
+
+const ReduxApp = () => (
+    <Provider store={Store}>
+      <App />
+    </Provider>
+);
+
+entry(ReduxApp);
 function entry(className) {
     AppRegistry.registerComponent(appName, () => className);
 }
