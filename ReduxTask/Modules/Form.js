@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {decrement, editData, increment, incrementByAmount} from './FormSlice';
+import {decrement, editData, increment, incrementByAmount} from '../Services/FormSlice';
 
 const FormScreen = ({navigation, route}) => {
   const {item, isEditOn} = route.params;

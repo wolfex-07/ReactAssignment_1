@@ -11,9 +11,9 @@ import Home from './AssignMents/Navigations/Home';
 import StockApp from './AssignMents/Stocks/Stocks';
 import TabComponent from './AssignMents/Stocks/Tab';
 import SnakeGame from './SnakeGame/SnakeGame';
-import HomeScreen from './ReduxTask/Home';
+import HomeScreen from './ReduxTask/Modules/Home';
 import Dots from './AssignMents/Dots';
-import Store from './ReduxTask/Store';
+import Store from './ReduxTask/Services/Store';
 import { Provider } from 'react-redux';
 
 

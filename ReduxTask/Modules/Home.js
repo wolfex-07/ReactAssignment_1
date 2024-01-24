@@ -11,7 +11,7 @@ import {
   Image,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {decrement, deleteData, increment} from './FormSlice';
+import {decrement, deleteData, increment} from '../Services/FormSlice';
 
 const HomeScreen = ({navigation}) => {
   const count = useSelector(state => state.form.value);

@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FormScreen from "./ReduxTask/Form";
-import HomeScreen from "./ReduxTask/Home";
+import FormScreen from "./ReduxTask/Modules/Form";
+import HomeScreen from "./ReduxTask/Modules/Home";
 
  
 
