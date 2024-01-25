@@ -4,26 +4,19 @@ const gameStyle = StyleSheet.create({
   snakebody: {
     height: 20,
     width: 20,
-    backgroundColor: 'powderblue',
-    borderRadius: 20,
+    backgroundColor: 'red',
+    borderRadius: 0,
     overflow: 'hidden',
     justifyContent: 'center',
   },
   snakeHeadImg: {
     flex: 1,
-    transform: 'scaleX(-1)',
     height: '100%',
     width: 'auto',
   },
   snakeHead: {
     borderRadius: 0,
-    // height: 0,
-    // width: 0,
-    backgroundColor: 'white',
-    // height: 20,
-    // width: 20,
-    transform: 'scale(1)',
-    // alignContent: 'center'
+    backgroundColor: 'red',
   },
   container: {
     flex: 1,

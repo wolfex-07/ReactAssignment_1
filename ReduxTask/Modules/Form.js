@@ -13,17 +13,16 @@ const FormScreen = ({navigation, route}) => {
   const saveData = () => {
     const newData = {id: isEditOn ? item.id : Date.now(), email, phone, dob};
     const isValid = validateInputs(email, phone, dob);
-    // Output will be true or false based on input validations
     if (isValid) {
       if (isEditOn) {
         dispatch(editData(newData));
       } else {
         dispatch(incrementByAmount(newData));
         dispatch(increment());
-        navigation.navigate('Home', {newData});
       }
+      navigation.navigate('Home', {newData});
     } else {
-      Alert("Invalid input.")
+      alert("Invalid input.")
     }
   };
 

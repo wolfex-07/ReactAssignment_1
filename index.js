@@ -24,7 +24,7 @@ const ReduxApp = () => (
     </Provider>
 );
 
-entry(ReduxApp);
+entry(SnakeGame);
 function entry(className) {
     AppRegistry.registerComponent(appName, () => className);
 }

@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {decrement, deleteData, increment} from '../Services/FormSlice';
+import UserCard from '../Components/UserCard';
 
 const HomeScreen = ({navigation}) => {
   const count = useSelector(state => state.form.value);
@@ -19,18 +20,16 @@ const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
 
-  handleItemClick = item => {
-    console.log('called', item);
+  handleEditClick = cardItem => {
     navigation.navigate('Form');
     navigation.navigate('Form', {
-      item: item,
+      item: cardItem,
       isEditOn: true,
     });
   };
 
-  handleDeleteClick = item => {
-    console.log('delete',item)
-    dispatch(deleteData(item))
+  handleDeleteClick = cardItem => {
+    dispatch(deleteData(cardItem))
   }
 
   useEffect(() => {
@@ -42,46 +41,15 @@ const HomeScreen = ({navigation}) => {
       {userDatalist.length == 0 ? (
         <View style={styles.emptyView}>
           <Text style={styles.emptyText}>
-            List is empty {userDatalist.length}
+            List is empty
           </Text>
         </View>
       ) : (
         <FlatList
           data={userDatalist}
           keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() => {
-                handleItemClick(item);
-              }}>
-              <View style={styles.item}>
-                <View style={{flex: 0.8, padding: 2}}>
-                  <Text style={{color: 'white'}}>{item.email}</Text>
-                  <Text style={{color: 'white'}}>{item.phone}</Text>
-                  <Text style={{color: 'white'}}>{item.dob}</Text>
-                </View>
-                <View style={styles.threeDotPopUpview}>
-                  <TouchableOpacity 
-                   onPress={() => {
-                    handleItemClick(item);
-                   }}
-                   style={styles.EditView}>
-                    <Text style={{textAlign: 'center', fontSize: 14}}>
-                      Edit
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => {
-                    handleDeleteClick(item);
-                   }}>
-                    <Text style={{textAlign: 'center', fontSize: 14}}>
-                      Delete
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
+          renderItem={({item}) => <UserCard item = {item} editClick = {handleEditClick} deleteClick={handleDeleteClick}/>}
+         />
       )}
       <Button
         title="Add Data"
